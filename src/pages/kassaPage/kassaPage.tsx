@@ -54,7 +54,8 @@ const KassaPage = (props: any) => {
     };
     const saveAndClose = () => {
         console.log('save');
-        setShowModal(true);
+        setIsAuthorized(false);
+        navigate('/');
     };
     useEffect(() => {
         if (!isAuthorized) {
