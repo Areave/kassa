@@ -1,0 +1,8 @@
+@use '../../style/style' as styles;
+
+.stat {
+  //height: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

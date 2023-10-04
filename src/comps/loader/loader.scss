@@ -1,0 +1,30 @@
+@use '../../style/style' as styles;
+
+.loader {
+  width: 48px;
+  height: 48px;
+  border: 5px solid styles.$green;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+  margin: auto;
+
+  &.loader_for-item-little {
+    width: 20px;
+    height: 20px;
+    //margin: 0;
+    border: 3px solid #FA5252;
+    border-bottom-color: transparent;
+  }
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}

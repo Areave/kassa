@@ -1,0 +1,58 @@
+@use '../../style/style' as styles;
+
+.auth-page {
+  @include styles.flexColumnCenterElements;
+  & .login-form__wrapper {
+    padding: 20px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    & .login-form__container {
+      height: 220px;
+      width: 300px;
+      padding: 30px;
+      border: styles.$darkgray 1px solid;
+      box-shadow: 0px 8px 15px -1px rgba(34, 60, 80, 0.2);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      & .login-form {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        & .form-control {
+          //width: 100%;
+        }
+        & .form-label {
+
+        }
+        & .formLogin {
+          width: 100%;
+          margin-bottom: 10px;
+        }
+        & .formPassword {
+          width: 100%;
+          margin-bottom: 10px;
+          height: 20px;
+        }
+        & .login-form__button-wrapper {
+          width: 100%;
+          margin-bottom: 10px;
+          & .form-button {
+            width: 100%;
+            margin-bottom: 10px;
+            height: 30px;
+            background-color: styles.$gray;
+            &:hover {
+              background-color: styles.$green;
+            }
+          }
+        }
+      }
+
+    }
+  }
+}

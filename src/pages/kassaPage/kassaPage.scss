@@ -1,0 +1,121 @@
+@use '../../style/style' as styles;
+
+.kassa-page {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  font-size: 16px;
+  line-height: 1.1em;
+  letter-spacing: .2rem;
+  & .content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 800px;
+    & .info {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+      margin-bottom: 30px;
+      &_operation {
+        &_item {
+          margin-bottom: 10px;
+        }
+        &__name {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        &__button {
+          height: 50px;
+          width: 250px;
+          color: white;
+          font-size: 25px;
+          font-weight: bold;
+          border-radius: 8px;
+          background-color: styles.$green;
+          &:hover {
+            background-color: styles.$darkgreen;
+          }
+          &-container {
+            margin-bottom: 0;
+          }
+        }
+      }
+      &_money {
+        display: flex;
+        flex-direction: row;
+        text-align: right;
+        &_item {
+          &_label {
+            margin-bottom: 10px;
+          }
+          &_value {
+            font-size: 25px;
+            font-weight: bold;
+            &.actual-balance {
+            }
+            &.substract {
+              color: styles.$pink;
+            }
+            &.add {
+              color: styles.$blue;
+            }
+            &.planned-balance {
+              color: styles.$green;
+            }
+
+          }
+        }
+        &__left {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          margin-right: 20px;
+
+        }
+        &__right {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+        }
+      }
+    }
+    & .infotable {
+      width: 100%;
+      &_header {
+        display: flex;
+        justify-content: space-between;
+        font-weight: bold;
+        background-color: styles.$darkgray;
+        border-top-left-radius: 8px;
+        border-top-right-radius: 8px;
+      }
+      & .item {
+        padding: 10px;
+        text-align: center;
+      }
+      &_items {
+
+      }
+      & .name {
+        width: 100px;
+      }
+      & .actual-balance {
+        width: 100px;
+        vertical-align: middle;
+      }
+      & .substract {
+        width: 100px;
+      }
+      & .add {
+        width: 100px;
+      }
+      & .planned-balance {
+        width: 100px;
+      }
+
+    }
+  }
+
+}

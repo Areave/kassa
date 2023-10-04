@@ -1,0 +1,12 @@
+@use '../../style/style' as styles;
+
+.daily-stat {
+  height: 200px;
+  max-width: 100%;
+  background-color: ghostwhite;
+  border: black solid 1px;
+  border-radius: 5px;
+  padding: 15px;
+  padding-bottom: 5px;
+
+}

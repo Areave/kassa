@@ -1,0 +1,100 @@
+@use 'variables' as vars;
+
+// size mixins
+
+@mixin forRootElements {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+  align-content: stretch;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+@mixin flexColumnCenterElements {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin square($val) {
+  height: $val;
+  width: $val;
+}
+
+@mixin stretch {
+  width: 100%;
+  min-height: 100%;
+}
+@mixin forTrimLongString {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+
+// components mixins
+
+@mixin actionButton {
+  padding: 5px 20px;
+  background-color: vars.$primary;
+  margin: 10px;
+  border-radius: 5px;
+  //@include shadow;
+
+  &:hover {
+    background-color: vars.$primaryHover;
+    cursor: pointer;
+  }
+}
+
+@mixin regularLink {
+  color: vars.$danger;
+  background: vars.$third;
+  font-weight: bold;
+  padding: 5px;
+  border: black solid 2px;
+
+  &:hover {
+    cursor: pointer;
+    background: vars.$thirdHoover;
+  }
+}
+
+@mixin forHeader {
+  background-color: vars.$secondary;
+  @include yellowBorder;
+  border-top:none;
+  width: 100%;
+  padding: 20px;
+}
+
+@mixin forContent {
+  flex-grow: 1;
+}
+
+@mixin forFooter {
+
+}
+
+
+
+
+// build mixins
+
+@mixin shadow {
+  box-shadow: 5px 6px 13px -3px rgba(0,0,0,0.67);
+}
+
+@mixin importantText {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+@mixin yellowBorder {
+  border-top: 2px solid vars.$third;
+  border-bottom: 2px solid vars.$third;
+}
+@mixin yellowBorderFull {
+  border: 2px solid vars.$third;
+}
