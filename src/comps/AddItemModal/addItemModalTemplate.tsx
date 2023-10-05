@@ -1,11 +1,8 @@
 import React, {useEffect, useState} from 'react'
 import {Form, Modal} from 'react-bootstrap';
 import './addItemModal.scss'
-import ActionButton from "../actionButton/actionButton";
-import {useSelector} from "react-redux";
 import {Types} from "../../utils/types";
 import {getPluralItemType, itemTypes} from "../../utils/itemTypes";
-import ItemsState = Types.ItemsState;
 import Dish = Types.Dish;
 import Product = Types.Product;
 

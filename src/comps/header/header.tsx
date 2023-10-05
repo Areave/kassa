@@ -1,11 +1,6 @@
 import React from "react";
-import {HeaderTemplate} from "./headerTemplate";
 import './header.scss'
 import {useNavigate} from "react-router";
-import Navbar from "react-bootstrap/Navbar";
-import Container from "react-bootstrap/Container";
-import Logo from "../../assets/images/logo.png";
-import {Navigation} from "../Navigation/navigation";
 
 const Header = (props: any) => {
 

@@ -4,17 +4,7 @@ import {itemTypes} from "./itemTypes";
 
 axios.defaults.withCredentials = true;
 
-const endPoint = '';
-
-// const dispatch = useDispatch();
-
-// axios.interceptors.response.use(function (response) {
-//     console.log('response interseptor!', response.data);
-//     return response;
-// }, function (error) {
-//     console.log('error interseptor!', error);
-//     return Promise.reject(error);
-// });
+const endPoint = 'https://api.dev.100czk.cz/api_v2/';
 
 const errorHandler = (error: any) => {
     error.message = error.response.data || {
@@ -36,13 +26,7 @@ const apiGetRequest = (url: string) => {
         // }, 1000);
     });
 };
-const apiPostRequest = (url: string, data: any) => {
-    return axios.post(url, data).then((data: any) => {
-        return Promise.resolve(data.data)
-    }).catch(error => {
-        errorHandler(error);
-    })
-};
+
 const apiPutRequest = (url: string, data: any) => {
     return new Promise((res, rej) => {
         return res(setTimeout(() => {
@@ -65,9 +49,31 @@ const apiDeleteRequest = (url: string, id: string = '') => {
     })
 };
 
-const authRequest = () => {
-    const url = usersEndpoint + 'get';
-    return apiGetRequest(url);
+const apiPostRequest = (url: string, data?: any) => {
+    return axios.post(endPoint + url, data).then((data: any) => {
+        return Promise.resolve(data.data)
+    }).catch(error => {
+        console.log(error);
+        // errorHandler(error);
+    })
+};
+
+const getTestToken = (sid: string) => {
+    return axios.post('https://api.dev.100czk.cz/api_v3/get_test_kiosk_token?sid=0').then((data: any) => {
+        return Promise.resolve(data.data)
+    }).catch(error => {
+        // errorHandler(error);
+    })
+};
+
+const getCollectionStatus = (sid: string) => {
+    return apiPostRequest('get_collection_status?sid=' + sid);
+};
+const startCollection = (sid: string, data: {username: string, password: string}) => {
+    return apiPostRequest('start_collection?sid=' + sid, data);
+};
+const closeCollection = (sid: string, data: {objects: any[]}) => {
+    return apiPostRequest('close_collection?sid=' + sid, data);
 };
 
 
@@ -231,7 +237,10 @@ const getApiMethodsObject = (itemType: string) => {
 
 export default {
 
-    authRequest,
+    getTestToken,
+    getCollectionStatus,
+    startCollection,
+    closeCollection,
 
     // users
     getUserData,

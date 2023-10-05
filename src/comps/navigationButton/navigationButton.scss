@@ -1,6 +1,0 @@
-@use '../../style/style' as styles;
-
-.navigationButton {
-    @include styles.regularLink;
-    @include styles.shadow;
-}
