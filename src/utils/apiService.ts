@@ -2,7 +2,7 @@ import axios from 'axios';
 import {dishesEndpoint, mealsEndpoint, productsEndpoint, statsEndpoint, usersEndpoint} from "./endpoints";
 import {itemTypes} from "./itemTypes";
 
-axios.defaults.withCredentials = true;
+// axios.defaults.withCredentials = true;
 
 const endPoint = 'https://api.dev.100czk.cz/api_v2/';
 

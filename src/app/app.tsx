@@ -3,11 +3,12 @@ import './app.scss';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {Navigate, Route, Routes} from "react-router";
+import {Navigate, Route, Routes, useNavigate} from "react-router";
 import AuthPage from "../pages/authPage/authPage";
 import apiService from "../utils/apiService";
 import KassaPage from "../pages/kassaPage/kassaPage";
 import LoadingPage from "../pages/loadingPage/loadingPage";
+import Header from "../comps/header/header";
 
 const App: React.FC<any> = () => {
 
@@ -22,17 +23,24 @@ const App: React.FC<any> = () => {
     const urlParam = new URLSearchParams(window.location.search);
     // const sid = urlParam.get('sid');
     const sid = '6b781ce68f71070d52cd417197310a23';
+    const navigate = useNavigate();
 
     useEffect(() => {
         // setIsLoading(true);
         apiService.getCollectionStatus(sid).then((res: any) => {
             setTimeout(() => {
-                // setIsLoading(false);
-                // setIsAuthorized(res.open);
-                // setKioskNumber(res.kiosk);
                 setIsLoading(false);
-                setIsAuthorized(true);
-                setKioskNumber('00250');
+                setIsAuthorized(res.open);
+                setKioskNumber(res.kiosk);
+                if (res.open) {
+                    navigate('/main')
+                } else {
+                    navigate('/')
+                }
+                // setIsLoading(false);
+                // setIsAuthorized(true);
+                // setKioskNumber('00250');
+                // navigate('/main')
             }, 1000);
         });
     }, []);
@@ -40,6 +48,7 @@ const App: React.FC<any> = () => {
 
     return <React.StrictMode>
         {isLoading && <LoadingPage/>}
+        {isAuthorized && <Header setIsAuthorized={setIsAuthorized} />}
         {!isLoading && <Routes>
             {isAuthorized && <Route path='/main' element={<KassaPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
             {!isAuthorized && <Route path='/' element={<AuthPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}

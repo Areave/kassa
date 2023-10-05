@@ -4,6 +4,7 @@ import TableItem from "../../comps/TableItem/TableItem";
 import {itemTypes} from "../../utils/itemTypes";
 import {AddItemModal} from "../../comps/AddItemModal/addItemModal";
 import {useNavigate} from "react-router";
+import Header from "../../comps/header/header";
 
 const KassaPage = (props: any) => {
 
@@ -65,6 +66,7 @@ const KassaPage = (props: any) => {
 
     return <div className="page kassa-page">
         <AddItemModal showModal={showModal} closeModal={() => setShowModal(false)}/>
+
         <div className="content">
             <div className="info">
                 <div className="info_operation">
