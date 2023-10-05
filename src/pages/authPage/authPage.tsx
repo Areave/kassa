@@ -19,8 +19,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized}: any) => {
         setTimeout(()=>{
             setIsLoading(false);
             setIsAuthorized(true);
-            setIsAuthorized(true);
-            navigate('/main');
+            // navigate('/main');
         }, 1000)
         // const loginData = {
         //     login: 'joe',

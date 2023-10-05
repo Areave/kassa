@@ -28,15 +28,17 @@ const App: React.FC<any> = () => {
     useEffect(() => {
         // setIsLoading(true);
         apiService.getCollectionStatus(sid).then((res: any) => {
+            console.log(res);
             setTimeout(() => {
                 setIsLoading(false);
-                setIsAuthorized(res.open);
-                setKioskNumber(res.kiosk);
-                if (res.open) {
-                    navigate('/main')
-                } else {
-                    navigate('/')
-                }
+                // setIsAuthorized(res.data.opened);
+                setIsAuthorized(true);
+                setKioskNumber(res.data.kiosk);
+                // if (isAuthorized) {
+                //     navigate('/main')
+                // } else {
+                //     navigate('/')
+                // }
                 // setIsLoading(false);
                 // setIsAuthorized(true);
                 // setKioskNumber('00250');
@@ -50,7 +52,7 @@ const App: React.FC<any> = () => {
         {isLoading && <LoadingPage/>}
         {isAuthorized && <Header setIsAuthorized={setIsAuthorized} />}
         {!isLoading && <Routes>
-            {isAuthorized && <Route path='/main' element={<KassaPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
+            {isAuthorized && <Route path='/' element={<KassaPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
             {!isAuthorized && <Route path='/' element={<AuthPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
         </Routes>}
     </React.StrictMode>
