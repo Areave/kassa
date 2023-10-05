@@ -1,7 +1,6 @@
 import React from 'react'
 import './loginFormTemplate.scss'
 import Form from "react-bootstrap/Form";
-import ActionButton from "../actionButton/actionButton";
 import Loader from "../loader/loader";
 
 export const LoginFormTemplate: React.FC<any> = ({login, register, onEmailChange, onPasswordChange, isLoading}) => {
@@ -17,8 +16,6 @@ export const LoginFormTemplate: React.FC<any> = ({login, register, onEmailChange
                     <Form.Control type="password" placeholder="password" onChange={onPasswordChange}/>
                 </Form.Group>
                 <div className="login-form__button-wrapper">
-                    <ActionButton className='mb-3' onClick={login} label={'login'}/>
-                    <ActionButton onClick={register} label={'register'}/>
                 </div>
             </Form>
         )}

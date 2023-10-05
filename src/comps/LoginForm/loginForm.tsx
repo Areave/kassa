@@ -1,13 +1,7 @@
 import React from "react";
-import {LoginFormTemplate} from "./loginFormTemplate";
-import apiService from "../../utils/apiService";
-import {setIsAuthorizedAction} from "../../utils/store/actionCreators";
-import {useDispatch} from "react-redux";
 import {useState} from "react";
-import {fetchLogin} from "../../utils/store/asyncThunks";
 import Loader from "../loader/loader";
 import Form from "react-bootstrap/Form";
-import ActionButton from "../actionButton/actionButton";
 
 const LoginForm = (props?: any) => {
 
@@ -58,7 +52,6 @@ const LoginForm = (props?: any) => {
                     <Form.Control type="password" placeholder="password" onChange={onPasswordChange}/>
                 </Form.Group>
                 <div className="login-form__button-wrapper">
-                    <ActionButton className='mb-3' onClick={login} label={'start'}/>
                     {/*<ActionButton onClick={register} label={'register'}/>*/}
                 </div>
             </Form>

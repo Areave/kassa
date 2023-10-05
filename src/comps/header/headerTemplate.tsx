@@ -1,6 +1,5 @@
 import React from 'react'
 import './header.scss'
-import {Navigation} from "../navigation/navigation";
 import Container from 'react-bootstrap/Container';
 import Navbar from 'react-bootstrap/Navbar';
 import Logo from '../../assets/images/logo.png';
@@ -16,7 +15,6 @@ export const HeaderTemplate: React.FC = (props) => {
                 <div className='img_container' onClick={() => {navigate('/')}}>
                     <img src={Logo}/>
                 </div>
-                <Navigation/>
             </Container>
         </Navbar>
     </div>
