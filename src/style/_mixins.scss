@@ -11,6 +11,11 @@
   padding: 20px;
 }
 
+@mixin infoTableItem {
+  padding: 10px;
+  text-align: center;
+  font-size: 18px;
+}
 @mixin flexColumnCenterElements {
   display: flex;
   justify-content: center;

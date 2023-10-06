@@ -9,8 +9,8 @@
     justify-content: center;
     align-items: center;
     & .login-form__container {
-      height: 220px;
-      width: 300px;
+      //height: 220px;
+      //width: 300px;
       padding: 30px;
       border: styles.$darkgray 1px solid;
       box-shadow: 0px 8px 15px -1px rgba(34, 60, 80, 0.2);
@@ -27,29 +27,45 @@
           //width: 100%;
         }
         & .form-label {
-
+          font-size: 22px;
+          margin-bottom: 10px;
         }
         & .formLogin {
           width: 100%;
-          margin-bottom: 10px;
+          margin-bottom: 20px;
+          height: 50px;
+          & input {
+            font-size: 22px;
+          }
         }
         & .formPassword {
           width: 100%;
           margin-bottom: 10px;
-          height: 20px;
+          height: 50px;
+          & input {
+            font-size: 22px;
+          }
         }
         & .login-form__button-wrapper {
           width: 100%;
           margin-bottom: 10px;
           & .form-button {
             width: 100%;
-            margin-bottom: 10px;
-            height: 30px;
-            background-color: styles.$gray;
+            //height: 30px;
+            font-size: 22px;
+            padding: 7px;
+            background-color: styles.$green;
+
+            margin-bottom: 5px;
+
             &:hover {
-              background-color: styles.$green;
+              //background-color: styles.$green;
             }
           }
+        }
+        & .error {
+          font-size: 16px;
+          color: red;
         }
       }
 

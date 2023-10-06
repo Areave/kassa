@@ -4,6 +4,28 @@
 .table-item {
   display: flex;
   justify-content: space-between;
+  & .item {
+    @include styles.infoTableItem;
+    &.substract,
+    &.add {
+      padding: 2px;
+      & .input-container {
+        display: flex;
+        justify-content: center;
+        background-color: styles.$pink;
+        padding: 8px;
+        border-radius: 7px;
+        & input{
+          height: 35px;
+          width: 100%;
+          font-size: 18px;
+        }
+      }
+    }
+    &.add .input-container{
+      background-color: styles.$blue;
+    }
+  }
   & .button {
     border-top-right-radius: 10px;
     border-bottom-left-radius: 10px;

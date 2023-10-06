@@ -13,36 +13,93 @@ import Header from "../comps/header/header";
 const App: React.FC<any> = () => {
 
     const [isAuthorized, setIsAuthorized] = useState(false);
-    const [kioskNumber, setKioskNumber] = useState('');
-    const [isLoading, setIsLoading] = useState(true);
+    const [currency, setCurrency] = useState('-');
+    const [sessionInfo, setSessionInfo] = useState({
+        terminalNumber: '',
+        clientName: '',
+        items: [],
+    });
+    const [isLoading, setIsLoading] = useState(false);
 
     // const messages: Types.Message[] = useSelector((state: Types.MainState) => {
     //     return state.messages.messages;
     // });
 
     const urlParam = new URLSearchParams(window.location.search);
-    // const sid = urlParam.get('sid');
-    const sid = '6b781ce68f71070d52cd417197310a23';
+    let sid = urlParam.get('token');
+    if (!sid) {
+        sid = '46e3d2c1311bcb307b58c5005d00fe8e';
+    }
     const navigate = useNavigate();
+    const [objects, setObjects] = useState([]);
 
     useEffect(() => {
-        // setIsLoading(true);
+        setIsLoading(true);
         apiService.getCollectionStatus(sid).then((res: any) => {
             console.log(res);
             setTimeout(() => {
                 setIsLoading(false);
-                // setIsAuthorized(res.data.opened);
-                setIsAuthorized(true);
-                setKioskNumber(res.data.kiosk);
-                // if (isAuthorized) {
-                //     navigate('/main')
-                // } else {
-                //     navigate('/')
-                // }
-                // setIsLoading(false);
+                setIsAuthorized(res.data.opened);
+                if (res.data.opened) {
+                    const sessionInfo = {
+                        terminalNumber: res.data.kiosk,
+                        clientName: res.data.user_id,
+                        items: res.data.objects,
+                    };
+                    sessionInfo.items = [
+                        {
+                            cash_in: 1,
+                            cash_out: 1,
+                            currency: "CZK",
+                            id: 5,
+                            name: "Oksjdfnk Nlwkf ",
+                            old_sum: 1
+                        }, {
+                            cash_in: 2,
+                            cash_out: 2,
+                            currency: "CZK",
+                            id: 6,
+                            name: "Pkksjdnl Rlskl ",
+                            old_sum: 2
+                        }
+                    //     {
+                    //     cash_in: 1150,
+                    //     cash_out: 900,
+                    //     currency: "CZK",
+                    //     id: 6,
+                    //     name: "Oksjdfnk Nlwkf ",
+                    //     old_sum: 550
+                    // }, {
+                    //     cash_in: 15,
+                    //     cash_out: 9,
+                    //     currency: "CZK",
+                    //     id: 6,
+                    //     name: "Pkksjdnl Rlskl ",
+                    //     old_sum: 1250
+                    // }
+
+                    // , {
+                    //     cash_in: 6456456456,
+                    //     cash_out: 5,
+                    //     currency: "CZK",
+                    //     id: 6,
+                    //     name: "Oksjdfnk Nlwkf Uksjdfksksdbksdbksd",
+                    //     old_sum: 2342344324
+                    // }, {
+                    //     cash_in: 0,
+                    //     cash_out: 0,
+                    //     currency: "CZK",
+                    //     id: 8,
+                    //     name: "000200",
+                    //     old_sum: 50
+                    // }
+                    ];
+                    setSessionInfo(sessionInfo);
+                    if (res.data.objects.length) {
+                        setCurrency(res.data.objects[0].currency);
+                    }
+                }
                 // setIsAuthorized(true);
-                // setKioskNumber('00250');
-                // navigate('/main')
             }, 1000);
         });
     }, []);
@@ -50,10 +107,15 @@ const App: React.FC<any> = () => {
 
     return <React.StrictMode>
         {isLoading && <LoadingPage/>}
-        {isAuthorized && <Header setIsAuthorized={setIsAuthorized} />}
         {!isLoading && <Routes>
-            {isAuthorized && <Route path='/' element={<KassaPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
-            {!isAuthorized && <Route path='/' element={<AuthPage isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
+            {isAuthorized && <Route path='/*' element={<KassaPage
+                objects={objects}
+                sid={sid}
+                sessionInfo={sessionInfo}
+                currency={currency}
+                isAuthorized={isAuthorized}
+                setIsAuthorized={setIsAuthorized}/>}/>}
+            {!isAuthorized && <Route path='/*' element={<AuthPage sid={sid} isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
         </Routes>}
     </React.StrictMode>
 };

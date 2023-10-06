@@ -1,8 +1,36 @@
 @use '../../style/style' as styles;
 
-.modal {
-  &__header {
-    //max-width: 80%;
-    @include styles.forTrimLongString;
+.modal-header {
+  padding: 10px 20px;
+  & .modal-title {
+
+    font-weight: bold;
+    font-size: 20px;
+  }
+}
+.modal_content {
+  padding: 15px;
+  &__text {
+    padding: 50px;
+    text-align: center;
+    font-size: 18px;
+  }
+  &__buttons {
+    display: flex;
+    justify-content: space-between;
+    & .button {
+      padding: 10px;
+      width: 100px;
+      &-close{
+        background-color: white;
+        border: styles.$gray 2px solid;
+      }
+      &-ok{
+        //border: styles.$gray 2px solid;
+        background-color: styles.$green;
+        color: white;
+
+      }
+    }
   }
 }

@@ -6,12 +6,14 @@
   align-items: center;
   font-size: 16px;
   line-height: 1.1em;
-  letter-spacing: .2rem;
+  //letter-spacing: .2rem;
+  padding: 0 !important;
   & .content {
     display: flex;
     flex-direction: column;
     width: 100%;
     max-width: 800px;
+    padding: 40px;
     & .info {
       display: flex;
       flex-direction: row;
@@ -34,6 +36,7 @@
           font-weight: bold;
           border-radius: 8px;
           background-color: styles.$green;
+          box-shadow: 0px 8px 15px -1px rgba(34, 60, 80, 0.2);
           &:hover {
             background-color: styles.$darkgreen;
           }
@@ -90,29 +93,25 @@
         background-color: styles.$darkgray;
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
-      }
       & .item {
-        padding: 10px;
-        text-align: center;
-      }
-      &_items {
-
+        @include styles.infoTableItem;
+        }
       }
       & .name {
-        width: 100px;
+        width: 200px;
+        font-size: 16px;
       }
       & .actual-balance {
-        width: 100px;
-        vertical-align: middle;
+        width: 120px;
       }
       & .substract {
-        width: 100px;
+        width: 120px;
       }
       & .add {
-        width: 100px;
+        width: 120px;
       }
       & .planned-balance {
-        width: 100px;
+        width: 120px;
       }
 
     }

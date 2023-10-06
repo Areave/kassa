@@ -4,33 +4,54 @@ import Form from 'react-bootstrap/Form';
 // import LoginForm from "../../comps/LoginForm/loginForm";
 import Loader from "../../comps/loader/loader";
 import {useNavigate} from "react-router";
+import apiService from "../../utils/apiService";
 // import TableItem from "../../comps/actionButton/actionButton";
 
-const AuthPage = ({isAuthorized, setIsAuthorized}: any) => {
+const AuthPage = ({isAuthorized, setIsAuthorized, sid}: any) => {
     const [formData, setFormData] = useState({login: '', password: ''});
     const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const loginError = () => {
+        event.preventDefault();
+        if (!error) {
+            setError('Wrong login or password, try again');
+        } else {
+            setError('');
+        }
+    };
     const login = (event: any) => {
         event.preventDefault();
         console.log(formData);
         setIsLoading(true);
-
-        setTimeout(()=>{
+        // const loginData = formData;
+        const loginData = {
+            'username': 'demon2',
+            'password': '1234'
+        };
+        apiService.startCollection(sid, loginData).then(res => {
+            console.log(res);
             setIsLoading(false);
             setIsAuthorized(true);
-            // navigate('/main');
-        }, 1000)
+            navigate('/main');
+        }).catch(console.log);
+
+        // setTimeout(()=>{
+        //     setIsLoading(false);
+        //     setIsAuthorized(true);
+        //     // navigate('/main');
+        // }, 1000)
         // const loginData = {
         //     login: 'joe',
         //     password: '1234'
         // };
         // dispatch(fetchLogin(loginData));
     };
-    const onLoginChange = (event:any) => {
+    const onLoginChange = (event: any) => {
         setFormData({...formData, login: event.target.value});
     };
-    const onPasswordChange = (event:any) => {
+    const onPasswordChange = (event: any) => {
         setFormData({...formData, password: event.target.value});
     };
 
@@ -43,7 +64,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized}: any) => {
     return <div className="page auth-page">
         <div className="login-form__wrapper">
             <div className='login-form__container'>
-                {isLoading ? ( <Loader/>) : (
+                {isLoading ? (<Loader/>) : (
                     <Form className='login-form'>
                         <Form.Label className='form-label'>Login to start collection</Form.Label>
                         <Form.Group className="formLogin" controlId="formLogin">
@@ -64,8 +85,13 @@ const AuthPage = ({isAuthorized, setIsAuthorized}: any) => {
                                     onClick={login}>
                                 {'start'}
                             </button>
+                            <button className='form-button'
+                                    onClick={loginError}>
+                                {'login error'}
+                            </button>
                             {/*<TableItem onClick={register} label={'register'}/>*/}
                         </div>
+                        <div className="error">{error}</div>
                     </Form>
                 )}
             </div>
