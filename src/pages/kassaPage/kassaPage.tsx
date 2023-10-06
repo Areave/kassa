@@ -81,8 +81,12 @@ const KassaPage = (props: any) => {
     }, [dataToSend]);
 
     return <div className="page kassa-page">
-        <AddItemModal sid={sid} dataToSend={dataToSend} showModal={showModal} closeModal={() => setShowModal(false)}/>
-        <Header user={sessionInfo.clientName} terminalNumber={sessionInfo.terminalNumber}  setIsAuthorized={setIsAuthorized}/>
+        <AddItemModal sid={sid}
+                      dataToSend={dataToSend}
+                      showModal={showModal}
+                      closeModal={() => setShowModal(false)}
+                      setIsAuthorized={setIsAuthorized}/>
+        <Header user={sessionInfo.clientName} terminalNumber={sessionInfo.terminalNumber} setIsAuthorized={setIsAuthorized}/>
         <div className="content">
             <div className="info">
                 <div className="info_operation">

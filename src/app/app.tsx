@@ -46,22 +46,22 @@ const App: React.FC<any> = () => {
                         clientName: res.data.user_id,
                         items: res.data.objects,
                     };
-                    sessionInfo.items = [
-                        {
-                            cash_in: 1,
-                            cash_out: 1,
-                            currency: "CZK",
-                            id: 5,
-                            name: "Oksjdfnk Nlwkf ",
-                            old_sum: 1
-                        }, {
-                            cash_in: 2,
-                            cash_out: 2,
-                            currency: "CZK",
-                            id: 6,
-                            name: "Pkksjdnl Rlskl ",
-                            old_sum: 2
-                        }
+                    // sessionInfo.items = [
+                    //     {
+                    //         cash_in: 1,
+                    //         cash_out: 1,
+                    //         currency: "CZK",
+                    //         id: 5,
+                    //         name: "Oksjdfnk Nlwkf ",
+                    //         old_sum: 1
+                    //     }, {
+                    //         cash_in: 2,
+                    //         cash_out: 2,
+                    //         currency: "CZK",
+                    //         id: 6,
+                    //         name: "Pkksjdnl Rlskl ",
+                    //         old_sum: 2
+                    //     }
                     //     {
                     //     cash_in: 1150,
                     //     cash_out: 900,
@@ -93,7 +93,7 @@ const App: React.FC<any> = () => {
                     //     name: "000200",
                     //     old_sum: 50
                     // }
-                    ];
+                    // ];
                     setSessionInfo(sessionInfo);
                     if (res.data.objects.length) {
                         setCurrency(res.data.objects[0].currency);
@@ -115,7 +115,11 @@ const App: React.FC<any> = () => {
                 currency={currency}
                 isAuthorized={isAuthorized}
                 setIsAuthorized={setIsAuthorized}/>}/>}
-            {!isAuthorized && <Route path='/*' element={<AuthPage sid={sid} isAuthorized={isAuthorized} setIsAuthorized={setIsAuthorized}/>}/>}
+            {!isAuthorized && <Route path='/*' element={<AuthPage sid={sid}
+                                                                  setSessionInfo={setSessionInfo}
+                                                                  setCurrency={setCurrency}
+                                                                  isAuthorized={isAuthorized}
+                                                                  setIsAuthorized={setIsAuthorized}/>}/>}
         </Routes>}
     </React.StrictMode>
 };

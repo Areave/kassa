@@ -7,7 +7,7 @@ import {useNavigate} from "react-router";
 import apiService from "../../utils/apiService";
 // import TableItem from "../../comps/actionButton/actionButton";
 
-const AuthPage = ({isAuthorized, setIsAuthorized, sid}: any) => {
+const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency}: any) => {
     const [formData, setFormData] = useState({login: '', password: ''});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -31,7 +31,16 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid}: any) => {
             'password': '1234'
         };
         apiService.startCollection(sid, loginData).then(res => {
-            console.log(res);
+
+            const sessionInfo = {
+                terminalNumber: res.data.kiosk,
+                clientName: res.data.user_id,
+                items: res.data.objects,
+            };
+            setSessionInfo(sessionInfo);
+            if (res.data.objects.length) {
+                setCurrency(res.data.objects[0].currency);
+            }
             setIsLoading(false);
             setIsAuthorized(true);
             navigate('/main');
@@ -87,7 +96,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid}: any) => {
                             </button>
                             <button className='form-button'
                                     onClick={loginError}>
-                                {'login error'}
+                                {'Ошибка логина'}
                             </button>
                             {/*<TableItem onClick={register} label={'register'}/>*/}
                         </div>

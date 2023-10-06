@@ -2,18 +2,26 @@ import React, {useState} from 'react'
 import {Modal} from 'react-bootstrap';
 import './addItemModal.scss';
 import apiService from "../../utils/apiService";
+import {useNavigate} from "react-router";
+import {setIsAuthorizedAction} from "../../utils/store/actionCreators";
 
-export const ItemModalTemplate = ({showModal, closeModal, dataToSend, sid}: any) => {
+export const ItemModalTemplate = ({showModal, closeModal, dataToSend, sid, setIsAuthorized}: any) => {
 
     const [isLoading, setIsLoading] = useState(false);
+    const [modalText, setModalText] = useState('Do you really want to close collection?');
+    const navigate = useNavigate();
 
     const saveAndClose = () => {
-        const data = {
-
-        }
-        closeModal();
         apiService.closeCollection(sid, {objects: dataToSend}).then(res => {
+            if (res.status === 'OK') {
+                setModalText('Collection closed. Back to login form');
+                setTimeout(() => {
+                    closeModal();
+                    setIsAuthorized(false)
+                    navigate('/')
+                }, 3000)
 
+            }
         })
     };
 
@@ -25,7 +33,7 @@ export const ItemModalTemplate = ({showModal, closeModal, dataToSend, sid}: any)
             <Modal.Body>
                 <div className="modal_content">
                     <div className="modal_content__text">
-                        Do you really want to close collection?
+                        {modalText}
                     </div>
                     <div className="modal_content__buttons">
                         <button className='button button-close' onClick={closeModal}>Cancel</button>
