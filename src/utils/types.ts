@@ -1,6 +1,5 @@
 import React, {Dispatch, SetStateAction} from "react";
-import {itemTypes} from "./itemTypes";
-import {AddItemModal} from "../comps/AddItemModal/addItemModal";
+import {SaveAndCloseModal} from "../comps/SaveAndCloseModal/SaveAndCloseModal";
 
 export namespace Types {
 

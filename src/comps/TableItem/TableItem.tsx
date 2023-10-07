@@ -3,33 +3,56 @@ import './TableItem.scss'
 import {Types} from '../../utils/types'
 import Form from "react-bootstrap/Form";
 
-const TableItem = ({tableItemData, index, setDataToSend, dataToSend}: any) => {
+const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorState, isErrorState}: any) => {
 
     const [localTableItemData, setLocalTableItemData] = useState(tableItemData);
 
     const colorClass = +index % 2 === 0 ? 'gray' : 'darkergray';
 
     const onCashInChange = (event: any): any => {
-        if (!event.target.value) {
+        if (!event.target.value || event.target.value === '-') {
             event.target.value = '0';
         }
         if (event.target.value.length > 1 && event.target.value[0] === '0') {
-            event.target.value = event.target.value.substring(1, event.target.value) ;
+            if (event.target.value[1] === ',') {
+                event.target.value = event.target.value.substring(2) ;
+            } else {
+                event.target.value = event.target.value.substring(1) ;
+            }
         }
 
         const value = +event.target.value;
+
+
+        if (localTableItemData.actualBalance + value - localTableItemData.substract < 0) {
+            setIsErrorState(true)
+        } else {
+            setIsErrorState(false)
+        }
+
         setLocalTableItemData({...localTableItemData,
             add: value,
             plannedBalance: localTableItemData.actualBalance + value - localTableItemData.substract});
     };
     const onCashOutChange = (event: any): any => {
-        if (!event.target.value) {
+        if (!event.target.value || event.target.value === '-') {
             event.target.value = '0';
         }
         if (event.target.value.length > 1 && event.target.value[0] === '0') {
-            event.target.value = event.target.value.substring(1, event.target.value) ;
+            if (event.target.value[1] === ',') {
+                event.target.value = event.target.value.substring(2) ;
+            } else {
+                event.target.value = event.target.value.substring(1) ;
+            }
         }
         const value = +event.target.value;
+
+        if (localTableItemData.actualBalance - value - + localTableItemData.add < 0) {
+            setIsErrorState(true)
+        } else {
+            setIsErrorState(false)
+        }
+
         setLocalTableItemData({...localTableItemData,
             substract: value,
             plannedBalance: localTableItemData.actualBalance - value + localTableItemData.add});
@@ -62,6 +85,14 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend}: any) => {
         event.target.select();
     };
 
+    const getPlannedBalanceClassName = (balance: string) => {
+        let className = 'item planned-balance';
+        if (+balance < 0) {
+            className += ' error'
+        }
+        return className;
+    }
+
     // @ts-ignore
     return <div className={'table-item ' + colorClass}>
         <div className="item name">{tableItemData.name}</div>
@@ -81,7 +112,7 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend}: any) => {
             </div>
 
         </div>
-        <div className="item planned-balance">{localTableItemData.plannedBalance}</div>
+        <div className={getPlannedBalanceClassName(localTableItemData.plannedBalance)}>{localTableItemData.plannedBalance}</div>
     </div>
 };
 

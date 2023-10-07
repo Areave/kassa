@@ -37,8 +37,10 @@
           border-radius: 8px;
           background-color: styles.$green;
           box-shadow: 0px 8px 15px -1px rgba(34, 60, 80, 0.2);
-          &:hover {
-            background-color: styles.$darkgreen;
+          @include styles.greenButtonWithHover;
+          &.error {
+            background-color: red;
+            font-size: 19px;
           }
           &-container {
             margin-bottom: 0;
@@ -84,6 +86,11 @@
         }
       }
     }
+    & .no_data {
+      font-size: 36px;
+      text-align: center;
+      padding: 50px;
+    }
     & .infotable {
       width: 100%;
       &_header {
@@ -112,8 +119,17 @@
       }
       & .planned-balance {
         width: 120px;
+        font-weight: bold;
+        &.error {
+          color: red;
+        }
       }
-
+    }
+    & .table-error {
+      margin-top: 20px;
+      text-align: center;
+      font-size: 30px;
+      color: red;
     }
   }
 

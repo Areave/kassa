@@ -1,13 +1,12 @@
 import './authPage.scss'
 import React, {useEffect, useState} from 'react';
 import Form from 'react-bootstrap/Form';
-// import LoginForm from "../../comps/LoginForm/loginForm";
 import Loader from "../../comps/loader/loader";
 import {useNavigate} from "react-router";
 import apiService from "../../utils/apiService";
-// import TableItem from "../../comps/actionButton/actionButton";
+import DateAndTime from "../../comps/DateAndTime/DateAndTime";
 
-const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency}: any) => {
+const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency, apiUrl}: any) => {
     const [formData, setFormData] = useState({login: '', password: ''});
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
@@ -30,12 +29,22 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
             'username': 'demon2',
             'password': '1234'
         };
-        apiService.startCollection(sid, loginData).then(res => {
+        apiService.startCollection(sid, apiUrl, loginData).then(res => {
+
+            if (res.status === 'COLLECTION_ALREADY_OPENED') {
+                navigate('/main');
+                setIsAuthorized(true);
+                setIsLoading(false);
+                return;
+            }
+
 
             const sessionInfo = {
                 terminalNumber: res.data.kiosk,
                 clientName: res.data.user_id,
                 items: res.data.objects,
+                // @ts-ignore
+                // items: [],
             };
             setSessionInfo(sessionInfo);
             if (res.data.objects.length) {
@@ -44,18 +53,10 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
             setIsLoading(false);
             setIsAuthorized(true);
             navigate('/main');
-        }).catch(console.log);
-
-        // setTimeout(()=>{
-        //     setIsLoading(false);
-        //     setIsAuthorized(true);
-        //     // navigate('/main');
-        // }, 1000)
-        // const loginData = {
-        //     login: 'joe',
-        //     password: '1234'
-        // };
-        // dispatch(fetchLogin(loginData));
+        }).catch(e => {
+            setIsLoading(false);
+            setError(e.message)
+        });
     };
     const onLoginChange = (event: any) => {
         setFormData({...formData, login: event.target.value});
@@ -80,25 +81,13 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
                             <Form.Control type="text" placeholder="username" onChange={onLoginChange}/>
                         </Form.Group>
                         <Form.Group className="formPassword" controlId="formPassword">
-                            {/*<Form.Label>Password</Form.Label>*/}
                             <Form.Control type="password" placeholder="password" onChange={onPasswordChange}/>
                         </Form.Group>
-                        {/*<div className="">*/}
-                        {/*    <input type="text" placeholder="username" onChange={onLoginChange}/>*/}
-                        {/*    <input type="text" placeholder="username" onChange={onLoginChange}/>*/}
-                        {/*</div>*/}
                         <div className="login-form__button-wrapper">
-                            {/*<TableItem className='mb-3' onClick={login} label={'start'}/>*/}
-
                             <button className='form-button'
                                     onClick={login}>
-                                {'start'}
+                                {'Start'}
                             </button>
-                            <button className='form-button'
-                                    onClick={loginError}>
-                                {'Ошибка логина'}
-                            </button>
-                            {/*<TableItem onClick={register} label={'register'}/>*/}
                         </div>
                         <div className="error">{error}</div>
                     </Form>

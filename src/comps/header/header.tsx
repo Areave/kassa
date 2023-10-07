@@ -1,17 +1,16 @@
 import React from "react";
 import './header.scss'
 import {useNavigate} from "react-router";
+import DateAndTime from "../DateAndTime/DateAndTime";
+import apiService from "../../utils/apiService";
 
 const Header = (props: any) => {
 
     const navigate = useNavigate();
-    const {user, terminalNumber, setIsAuthorized} = props;
-    // const user = 'User';
-    const data = '2023.12.03';
-    const time = '17:59:03';
-    const infoString = [user, data, time].join(', ');
+    const {user, terminalNumber, setIsAuthorized, apiUrl} = props;
 
     const exit = () => {
+        apiService.goHome(apiUrl);
         setIsAuthorized(false);
         navigate('/');
     };
@@ -21,7 +20,8 @@ const Header = (props: any) => {
             Terminal home
         </button>
         <div className='data-container'>
-            <div className="infostring">{infoString}</div>
+            <div className="infostring">{user + ' ,'}</div>
+            <DateAndTime/>
             <div className="number">{terminalNumber}</div>
         </div>
     </div>

@@ -20,11 +20,15 @@
     align-items: center;
     & .infostring {
       color: styles.$dark;
+      margin-right: 5px;
+    }
+    & .datetime_string {
       margin-right: 15px;
     }
     & .number {
       font-size: 20px;
       font-weight: bold;
+      margin-right: 15px;
     }
   }
 
