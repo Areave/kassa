@@ -26,9 +26,9 @@ const App: React.FC<any> = () => {
     // });
 
     const urlParam = new URLSearchParams(window.location.search);
-    let sid = urlParam.get('token');
+    let sid = urlParam.get('token_key');
     if (!sid) {
-        sid = '46e3d2c1311bcb307b58c5005d00fe8e';
+        sid = 'eaebe17f67cae519b26146140acea3d7';
     }
     const navigate = useNavigate();
     const [objects, setObjects] = useState([]);
