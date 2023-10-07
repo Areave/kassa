@@ -45,7 +45,11 @@ const App: React.FC<any> = () => {
                 setIsAuthorized(res.data.opened);
                 if (res.data.opened) {
 
-                    // res.data.objects = [];
+                    // res.data.objects = res.data.objects
+                    //     .concat(res.data.objects)
+                    //     .concat(res.data.objects)
+                    //     .concat(res.data.objects)
+                    //     .concat(res.data.objects);
 
 
                     const sessionInfo = {

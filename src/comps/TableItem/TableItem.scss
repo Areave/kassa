@@ -46,3 +46,8 @@
     background-color: styles.$darkergray;
   }
 }
+
+.table-item:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}

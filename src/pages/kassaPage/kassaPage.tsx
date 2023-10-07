@@ -48,7 +48,7 @@ const KassaPage = (props: any) => {
 
             sessionInfo.items.forEach((item: any) => {
                 tempTotalInfo.actualBalance += item.old_sum;
-                tempTotalInfo.plannedBalance += item.old_sum - item.cash_out + item.cash_in;
+                tempTotalInfo.plannedBalance += +(item.old_sum - item.cash_out + item.cash_in).toFixed(2);
                 tempTotalInfo.substractTotal += item.cash_out;
                 tempTotalInfo.addTotal += item.cash_in;
 
@@ -77,9 +77,9 @@ const KassaPage = (props: any) => {
             addTotal: 0
         };
         dataToSend.forEach((item: any) => {
-            tempTotalInfo.plannedBalance += item.old_sum - item.cash_out + item.cash_in;
-            tempTotalInfo.substractTotal += item.cash_out;
-            tempTotalInfo.addTotal += item.cash_in;
+            tempTotalInfo.plannedBalance = +(tempTotalInfo.plannedBalance + item.old_sum - item.cash_out + item.cash_in).toFixed(2);
+            tempTotalInfo.substractTotal = +(tempTotalInfo.substractTotal + item.cash_out).toFixed(2);
+            tempTotalInfo.addTotal = +(tempTotalInfo.addTotal + item.cash_in).toFixed(2);
             setTotalInfo({...totalInfo, ...tempTotalInfo});
         });
 
@@ -146,7 +146,7 @@ const KassaPage = (props: any) => {
                             id: item.id,
                             name: item.name,
                             actualBalance: item.old_sum,
-                            plannedBalance: item.old_sum - item.cash_out + item.cash_in,
+                            plannedBalance: +(item.old_sum - item.cash_out + item.cash_in).toFixed(2),
                             substract: item.cash_out,
                             add: item.cash_in,
                             old_sum: item.old_sum

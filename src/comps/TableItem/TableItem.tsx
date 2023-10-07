@@ -13,11 +13,14 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
         if (!event.target.value || event.target.value === '-') {
             event.target.value = '0';
         }
+
         if (event.target.value.length > 1 && event.target.value[0] === '0') {
-            if (event.target.value[1] === ',') {
-                event.target.value = event.target.value.substring(2) ;
-            } else {
+            if (event.target.value[1] !== '.') {
                 event.target.value = event.target.value.substring(1) ;
+            } else {
+                if (event.target.value.split('.')[1].length > 2) {
+                    event.target.value = event.target.value.substring(0, event.target.value.length - 1)
+                }
             }
         }
 
@@ -32,17 +35,20 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
 
         setLocalTableItemData({...localTableItemData,
             add: value,
-            plannedBalance: localTableItemData.actualBalance + value - localTableItemData.substract});
+            plannedBalance: (localTableItemData.actualBalance + value - localTableItemData.substract).toFixed(2)});
     };
     const onCashOutChange = (event: any): any => {
         if (!event.target.value || event.target.value === '-') {
             event.target.value = '0';
         }
+
         if (event.target.value.length > 1 && event.target.value[0] === '0') {
-            if (event.target.value[1] === ',') {
-                event.target.value = event.target.value.substring(2) ;
-            } else {
+            if (event.target.value[1] !== '.') {
                 event.target.value = event.target.value.substring(1) ;
+            } else {
+                if (event.target.value.split('.')[1].length > 2) {
+                    event.target.value = event.target.value.substring(0, event.target.value.length - 1)
+                }
             }
         }
         const value = +event.target.value;
@@ -55,7 +61,7 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
 
         setLocalTableItemData({...localTableItemData,
             substract: value,
-            plannedBalance: localTableItemData.actualBalance - value + localTableItemData.add});
+            plannedBalance: (localTableItemData.actualBalance - value + localTableItemData.add).toFixed(2)});
     };
 
     const updateDataToSend = (localTableItemData:any, index: number) => {
