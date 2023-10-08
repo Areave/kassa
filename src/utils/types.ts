@@ -5,6 +5,25 @@ export namespace Types {
 
     // state
 
+    export interface ITotalInfo {
+        actualBalance: number,
+        plannedBalance: number,
+        cash_out_total: number,
+        cash_in_total: number,
+    }
+    export interface IItem {
+        id: string,
+        old_sum?: number,
+        cash_in: number,
+        cash_out: number
+    }
+
+    export interface ISessionInfo {
+        terminalNumber: number,
+        clientName: string,
+        items: IItem[],
+    }
+
     export interface MainState {
         readonly user: UserState;
         readonly items: ItemsState;

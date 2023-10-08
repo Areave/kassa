@@ -6,75 +6,68 @@ import Form from "react-bootstrap/Form";
 const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorState, isErrorState}: any) => {
 
     const [localTableItemData, setLocalTableItemData] = useState(tableItemData);
-
+    const [isLocalErrorState, setIsLocalErrorState] = useState(false);
     const colorClass = +index % 2 === 0 ? 'gray' : 'darkergray';
 
+    const getValidInputValue = (rawValue: string): string => {
+        let validValue: string = rawValue;
+        if (!rawValue || rawValue === '-' || rawValue === '00') {
+            validValue = '0';
+        } else if (rawValue.length === 2 && rawValue[0] === '0') {
+            validValue = rawValue[1];
+        } else if (rawValue.includes('.') && rawValue.split('.')[1].length > 2) {
+            validValue = rawValue.substring(0, rawValue.length - 1)
+        }
+        return validValue;
+    };
+
     const onCashInChange = (event: any): any => {
-        if (!event.target.value || event.target.value === '-') {
-            event.target.value = '0';
-        }
 
-        if (event.target.value.length > 1 && event.target.value[0] === '0') {
-            if (event.target.value[1] !== '.') {
-                event.target.value = event.target.value.substring(1) ;
-            } else {
-                if (event.target.value.split('.')[1].length > 2) {
-                    event.target.value = event.target.value.substring(0, event.target.value.length - 1)
-                }
-            }
-        }
-
+        event.target.value = getValidInputValue(event.target.value);
         const value = +event.target.value;
 
-
-        if (localTableItemData.actualBalance + value - localTableItemData.substract < 0) {
-            setIsErrorState(true)
+        if (localTableItemData.actualBalance + value - localTableItemData.cash_out < 0) {
+            setIsLocalErrorState(true)
         } else {
-            setIsErrorState(false)
+            setIsLocalErrorState(false)
         }
 
-        setLocalTableItemData({...localTableItemData,
-            add: value,
-            plannedBalance: (localTableItemData.actualBalance + value - localTableItemData.substract).toFixed(2)});
+        setLocalTableItemData({
+            ...localTableItemData,
+            cash_in: value,
+            plannedBalance: (localTableItemData.actualBalance + value - localTableItemData.cash_out).toFixed(2)
+        });
     };
+
     const onCashOutChange = (event: any): any => {
-        if (!event.target.value || event.target.value === '-') {
-            event.target.value = '0';
-        }
 
-        if (event.target.value.length > 1 && event.target.value[0] === '0') {
-            if (event.target.value[1] !== '.') {
-                event.target.value = event.target.value.substring(1) ;
-            } else {
-                if (event.target.value.split('.')[1].length > 2) {
-                    event.target.value = event.target.value.substring(0, event.target.value.length - 1)
-                }
-            }
-        }
+        event.target.value = getValidInputValue(event.target.value);
         const value = +event.target.value;
 
-        if (localTableItemData.actualBalance - value - + localTableItemData.add < 0) {
-            setIsErrorState(true)
+        if (localTableItemData.actualBalance - value - +localTableItemData.cash_in < 0) {
+            setIsLocalErrorState(true)
         } else {
-            setIsErrorState(false)
+            setIsLocalErrorState(false)
         }
 
-        setLocalTableItemData({...localTableItemData,
-            substract: value,
-            plannedBalance: (localTableItemData.actualBalance - value + localTableItemData.add).toFixed(2)});
+        setLocalTableItemData({
+            ...localTableItemData,
+            cash_out: value,
+            plannedBalance: (localTableItemData.actualBalance - value + localTableItemData.cash_in).toFixed(2)
+        });
     };
 
-    const updateDataToSend = (localTableItemData:any, index: number) => {
+    const updateDataToSend = (localTableItemData: any, index: number) => {
 
-        const newDataToSend:any[] = [];
+        const newDataToSend: any[] = [];
 
-        dataToSend.forEach((dataObject:any, dataObjectIndex: number) => {
+        dataToSend.forEach((dataObject: any, dataObjectIndex: number) => {
             if (dataObjectIndex === index) {
                 newDataToSend.push({
                     id: localTableItemData.id,
                     old_sum: localTableItemData.old_sum,
-                    cash_in: localTableItemData.add,
-                    cash_out: localTableItemData.substract
+                    cash_in: localTableItemData.cash_in,
+                    cash_out: localTableItemData.cash_out
                 });
             } else {
                 newDataToSend.push(dataObject);
@@ -83,42 +76,45 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
         setDataToSend(newDataToSend)
     };
 
-    useEffect(()=>{
-        updateDataToSend(localTableItemData, index)
-    }, [localTableItemData]);
-
     const onInputClick = (event: any): any => {
         event.target.select();
     };
 
-    const getPlannedBalanceClassName = (balance: string) => {
+    const getPlannedBalanceClassName = () => {
         let className = 'item planned-balance';
-        if (+balance < 0) {
+        if (isLocalErrorState) {
             className += ' error'
         }
         return className;
-    }
+    };
 
-    // @ts-ignore
+    useEffect(() => {
+        updateDataToSend(localTableItemData, index)
+    }, [localTableItemData]);
+
+    useEffect(() => {
+        setIsErrorState({...isErrorState, [index]: isLocalErrorState});
+    }, [isLocalErrorState]);
+
     return <div className={'table-item ' + colorClass}>
         <div className="item name">{tableItemData.name}</div>
         <div className="item actual-balance">{tableItemData.actualBalance}</div>
         <div className="item substract">
             <div className="input-container">
-                <Form.Control as="input" type="number" defaultValue={tableItemData.substract}
+                <Form.Control as="input" type="number" defaultValue={tableItemData.cash_out}
                               onClick={onInputClick}
                               onChange={onCashOutChange}/>
             </div>
         </div>
         <div className="item add">
             <div className="input-container">
-                <Form.Control as="input" type="number" defaultValue={tableItemData.add}
+                <Form.Control as="input" type="number" defaultValue={tableItemData.cash_in}
                               onClick={onInputClick}
                               onChange={onCashInChange}/>
             </div>
 
         </div>
-        <div className={getPlannedBalanceClassName(localTableItemData.plannedBalance)}>{localTableItemData.plannedBalance}</div>
+        <div className={getPlannedBalanceClassName()}>{localTableItemData.plannedBalance}</div>
     </div>
 };
 

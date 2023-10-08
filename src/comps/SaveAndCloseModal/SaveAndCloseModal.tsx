@@ -22,8 +22,7 @@ export const SaveAndCloseModal = ({showModal, closeModal, dataToSend, sid, setIs
             setTimeout(() => {
                 closeModal();
                 setIsAuthorized(false);
-                navigate('/')
-            }, 3000);
+            }, 2000);
         } else {
             apiService.closeCollection(sid, apiUrl, {objects: data}).then(res => {
                 console.log('then after get status before saving');
@@ -33,14 +32,13 @@ export const SaveAndCloseModal = ({showModal, closeModal, dataToSend, sid, setIs
                     setTimeout(() => {
                         closeModal();
                         setIsAuthorized(false);
-                        navigate('/')
-                    }, 2000);
+                    }, 1000);
                 } else throw new Error('Network problems')
             }).catch(e => {
                 setModalText('ERROR: ' + e.message);
             })
         }
-    }
+    };
 
     return <div style={{display: 'block', position: 'initial'}}>
         <Modal centered show={showModal} onHide={() => closeModal()}>
