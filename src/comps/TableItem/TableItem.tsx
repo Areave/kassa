@@ -15,8 +15,12 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
             validValue = '0';
         } else if (rawValue.length === 2 && rawValue[0] === '0') {
             validValue = rawValue[1];
-        } else if (rawValue.includes('.') && rawValue.split('.')[1].length > 2) {
-            validValue = rawValue.substring(0, rawValue.length - 1)
+        } else if (rawValue.includes('.')) {
+            if (rawValue[0] === '.') {
+                validValue = rawValue.substring(1, rawValue.length)
+            } else if (rawValue.split('.')[1].length > 2) {
+                validValue = rawValue.substring(0, rawValue.length - 1)
+            }
         }
         return validValue;
     };
