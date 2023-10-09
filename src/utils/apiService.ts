@@ -39,8 +39,8 @@ const closeCollection = (sid: string, apiUrl: string, data: { objects: any[] }) 
     return apiPostRequest(apiUrl + 'close_collection?sid=' + sid, data);
 };
 
-const goHome = (apiUrl: string) => {
-    return apiPostRequest(apiUrl + 'kiosk_go_home');
+const goHome = (apiUrl: string, sid: string) => {
+    return apiPostRequest(apiUrl + 'kiosk_go_home?sid=' + sid);
 };
 
 export default {

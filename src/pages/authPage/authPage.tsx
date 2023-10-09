@@ -48,7 +48,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
     };
 
     const exit = () => {
-        apiService.goHome(apiUrl);
+        apiService.goHome(apiUrl, sid);
         setIsAuthorized(false);
         navigate('/');
     };

@@ -86,7 +86,7 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
                            closeModal={() => setShowModal(false)}
                            isNoItemsState={isNoItemsState}
                            setIsAuthorized={setIsAuthorized}/>
-        <Header user={sessionInfo.clientName} terminalNumber={sessionInfo.terminalNumber} setIsAuthorized={setIsAuthorized} apiUrl={apiUrl}/>
+        <Header user={sessionInfo.clientName} terminalNumber={sessionInfo.terminalNumber} setIsAuthorized={setIsAuthorized} apiUrl={apiUrl} sid={sid}/>
         <div className="content">
             <div className="info">
                 <div className="info_operation">

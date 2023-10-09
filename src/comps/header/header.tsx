@@ -7,10 +7,10 @@ import apiService from "../../utils/apiService";
 const Header = (props: any) => {
 
     const navigate = useNavigate();
-    const {user, terminalNumber, setIsAuthorized, apiUrl} = props;
+    const {user, terminalNumber, setIsAuthorized, apiUrl, sid} = props;
 
     const exit = () => {
-        apiService.goHome(apiUrl);
+        apiService.goHome(apiUrl, sid);
         setIsAuthorized(false);
         navigate('/');
     };
