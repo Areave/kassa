@@ -3,10 +3,12 @@ import React, {useState} from 'react';
 import Form from 'react-bootstrap/Form';
 import apiService from "../../utils/apiService";
 import LoadingPage from "../loadingPage/loadingPage";
+import {useNavigate} from "react-router";
 
 const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency, apiUrl, error, setError}: any) => {
     const [loginData, setFormData] = useState({username: 'demon2', password: '1234'});
     const [isLoading, setIsLoading] = useState(false);
+    const navigate = useNavigate();
 
     const login = (event: any) => {
         event.preventDefault();
@@ -45,28 +47,39 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
         setFormData({...loginData, password: event.target.value});
     };
 
+    const exit = () => {
+        apiService.goHome(apiUrl);
+        setIsAuthorized(false);
+        navigate('/');
+    };
+
     return <div className="page auth-page">
         {isLoading && <LoadingPage/>}
-        {!isLoading && <div className="login-form__wrapper">
-            <div className='login-form__container'>
-                <Form className='login-form'>
-                    <Form.Label className='form-label'>Login to start collection</Form.Label>
-                    <Form.Group className="formLogin" controlId="formLogin">
-                        <Form.Control type="text" placeholder="username" onChange={onUsernameChange}/>
-                    </Form.Group>
-                    <Form.Group className="formPassword" controlId="formPassword">
-                        <Form.Control type="password" placeholder="password" onChange={onPasswordChange}/>
-                    </Form.Group>
-                    <div className="login-form__button-wrapper">
-                        <button className='form-button'
-                                onClick={login}>
-                            {'Start'}
-                        </button>
-                    </div>
-                    <div className="error">{error}</div>
-                </Form>
+        {!isLoading && <>
+            <button className='terminal-home-button' onClick={exit}>
+                Terminal home
+            </button>
+            <div className="login-form__wrapper">
+                <div className='login-form__container'>
+                    <Form className='login-form'>
+                        <Form.Label className='form-label'>Login to start collection</Form.Label>
+                        <Form.Group className="formLogin" controlId="formLogin">
+                            <Form.Control type="text" placeholder="username" onChange={onUsernameChange}/>
+                        </Form.Group>
+                        <Form.Group className="formPassword" controlId="formPassword">
+                            <Form.Control type="password" placeholder="password" onChange={onPasswordChange}/>
+                        </Form.Group>
+                        <div className="login-form__button-wrapper">
+                            <button className='form-button'
+                                    onClick={login}>
+                                {'Start'}
+                            </button>
+                        </div>
+                        <div className="error">{error}</div>
+                    </Form>
+                </div>
             </div>
-        </div>}
+        </>}
     </div>
 };
 export default AuthPage;
