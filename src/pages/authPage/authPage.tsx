@@ -56,7 +56,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
     return <div className="page auth-page">
         {isLoading && <LoadingPage/>}
         {!isLoading && <>
-            <button className='terminal-home-button' onClick={exit}>
+            <button className='terminal-home-button2' onClick={exit}>
                 Terminal home
             </button>
             <div className="login-form__wrapper">
