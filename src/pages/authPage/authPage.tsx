@@ -4,8 +4,9 @@ import Form from 'react-bootstrap/Form';
 import apiService from "../../utils/apiService";
 import LoadingPage from "../loadingPage/loadingPage";
 import {useNavigate} from "react-router";
+import ExitToTerminalButton from "../../comps/ExitToTerminalButton/ExitToTerminalButton";
 
-const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency, apiUrl, error, setError}: any) => {
+const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency, apiUrl, error, setError, exit}: any) => {
     const [loginData, setFormData] = useState({username: 'demon2', password: '1234'});
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
@@ -17,7 +18,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
 
             if (res.status === 'COLLECTION_ALREADY_OPENED') {
                 setIsAuthorized(true);
-            } else if (res.status === 'PARAMETER_NOT_FOUND') {
+            } else if (res.status === 'PARAMETER_NOT_FOUND' || res.status === 'BAD_SESSION_KEY') {
                 setError(res.message);
                 return;
             } else {
@@ -47,18 +48,10 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
         setFormData({...loginData, password: event.target.value});
     };
 
-    const exit = () => {
-        apiService.goHome(apiUrl, sid);
-        setIsAuthorized(false);
-        navigate('/');
-    };
-
     return <div className="page auth-page">
         {isLoading && <LoadingPage/>}
         {!isLoading && <>
-            <button className='terminal-home-button2' onClick={exit}>
-                Terminal home
-            </button>
+            <ExitToTerminalButton exit={exit}/>
             <div className="login-form__wrapper">
                 <div className='login-form__container'>
                     <Form className='login-form'>

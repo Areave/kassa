@@ -1,24 +1,14 @@
 import React from "react";
 import './header.scss'
-import {useNavigate} from "react-router";
 import DateAndTime from "../DateAndTime/DateAndTime";
-import apiService from "../../utils/apiService";
+import ExitToTerminalButton from "../ExitToTerminalButton/ExitToTerminalButton";
 
 const Header = (props: any) => {
 
-    const navigate = useNavigate();
-    const {user, terminalNumber, setIsAuthorized, apiUrl, sid} = props;
-
-    const exit = () => {
-        apiService.goHome(apiUrl, sid);
-        setIsAuthorized(false);
-        navigate('/');
-    };
+    const {user, terminalNumber, exit} = props;
 
     return <div className='header'>
-        <button className='button terminal-home-button' onClick={exit}>
-            Terminal home
-        </button>
+        <ExitToTerminalButton exit={exit}/>
         <div className='data-container'>
             <div className="infostring">{user + ' ,'}</div>
             <DateAndTime/>

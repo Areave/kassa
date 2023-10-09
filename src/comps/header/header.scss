@@ -6,15 +6,6 @@
   box-shadow: 0px 8px 10px -1px rgba(34, 60, 80, 0.2);
   display: flex;
   justify-content: center;
-  & .terminal-home-button {
-    height: 35px;
-    position: absolute;
-    top: 7px;
-    left: 20px;
-    border: styles.$darkgray 2px solid;
-    padding: 0 7px;
-    background-color: white;
-  }
   & .data-container {
     display: flex;
     align-items: center;

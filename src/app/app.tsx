@@ -23,7 +23,7 @@ const App: React.FC<any> = () => {
     const urlParam = new URLSearchParams(window.location.search);
     let sid = urlParam.get('token_key');
     if (!sid) {
-        sid = '046fe6d41e3c243fae5f48b1b2edc5c7';
+        sid = 'ba84226ef2533efcd72641da1ab40926';
     }
     let apiUrl = urlParam.get('api_url');
     //TODO: поправить
@@ -32,6 +32,12 @@ const App: React.FC<any> = () => {
     } else {
         apiUrl = 'https://api.dev.100czk.cz/api_v2/';
     }
+
+    const exit = () => {
+        apiService.goHome(apiUrl, sid);
+        setIsAuthorized(false);
+        navigate('/');
+    };
 
     useEffect(() => {
         setIsLoading(true);
@@ -64,12 +70,14 @@ const App: React.FC<any> = () => {
             {isAuthorized && <Route path='/*' element={<KassaPage
                 sid={sid}
                 apiUrl={apiUrl}
+                exit={exit}
                 sessionInfo={sessionInfo}
                 currency={currency}
                 isAuthorized={isAuthorized}
                 setIsAuthorized={setIsAuthorized}/>}/>}
             {!isAuthorized && <Route path='/*' element={<AuthPage sid={sid}
                                                                   apiUrl={apiUrl}
+                                                                  exit={exit}
                                                                   setSessionInfo={setSessionInfo}
                                                                   error={error}
                                                                   setError={setError}

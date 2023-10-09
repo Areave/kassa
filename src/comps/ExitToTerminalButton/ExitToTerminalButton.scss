@@ -1,0 +1,12 @@
+@use '../../style/style' as styles;
+
+.exit-to-terminal-button {
+  height: 35px;
+  position: absolute;
+  top: 7px;
+  left: 20px;
+  font-size: 16px;
+  border: styles.$darkgray 2px solid;
+  padding: 0 7px;
+  background-color: white;
+}

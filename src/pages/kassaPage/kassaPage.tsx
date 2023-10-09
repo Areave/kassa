@@ -8,7 +8,7 @@ import ISessionInfo = Types.ISessionInfo;
 import IItem = Types.IItem;
 import ITotalInfo = Types.ITotalInfo;
 
-const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, apiUrl}: any) => {
+const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, apiUrl, exit}: any) => {
 
     const [showModal, setShowModal] = useState(false);
     const [isNoItemsState, setIsNoItemsState] = useState(false);
@@ -86,7 +86,7 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
                            closeModal={() => setShowModal(false)}
                            isNoItemsState={isNoItemsState}
                            setIsAuthorized={setIsAuthorized}/>
-        <Header user={sessionInfo.clientName} terminalNumber={sessionInfo.terminalNumber} setIsAuthorized={setIsAuthorized} apiUrl={apiUrl} sid={sid}/>
+        <Header user={sessionInfo.clientName} terminalNumber={sessionInfo.terminalNumber} setIsAuthorized={setIsAuthorized} apiUrl={apiUrl} sid={sid} exit={exit}/>
         <div className="content">
             <div className="info">
                 <div className="info_operation">
