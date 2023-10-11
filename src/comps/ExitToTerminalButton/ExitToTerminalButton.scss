@@ -2,6 +2,7 @@
 
 .exit-to-terminal-button {
   height: 35px;
+  width: 140px;
   position: absolute;
   top: 7px;
   left: 20px;
@@ -9,4 +10,12 @@
   border: styles.$darkgray 2px solid;
   padding: 0 7px;
   background-color: white;
+  &.loading {
+    //background-color: styles.$gray;
+    padding: 3px;
+  }
+  & .loader {
+    width: 25px;
+    height: 25px;
+  }
 }

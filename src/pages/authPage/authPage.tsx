@@ -14,11 +14,15 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
     const login = (event: any) => {
         event.preventDefault();
         setIsLoading(true);
-        apiService.startCollection(sid, apiUrl, loginData).then(res => {
+        let data = loginData;
+        if(!loginData.password && !loginData.username) {
+            data = {username: 'demon2', password: '1234'}
+        }
+        apiService.startCollection(sid, apiUrl, data).then(res => {
 
             if (res.status === 'COLLECTION_ALREADY_OPENED') {
                 setIsAuthorized(true);
-            } else if (res.status === 'PARAMETER_NOT_FOUND' || res.status === 'BAD_SESSION_KEY') {
+            } else if (res.status !== 'OK') {
                 setError(res.message);
                 return;
             } else {
@@ -51,16 +55,16 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
     return <div className="page auth-page">
         {isLoading && <LoadingPage/>}
         {!isLoading && <>
-            <ExitToTerminalButton exit={exit}/>
+
             <div className="login-form__wrapper">
                 <div className='login-form__container'>
                     <Form className='login-form'>
                         <Form.Label className='form-label'>Login to start collection</Form.Label>
                         <Form.Group className="formLogin" controlId="formLogin">
-                            <Form.Control type="text" placeholder="username" onChange={onUsernameChange}/>
+                            <Form.Control defaultValue={loginData.username} type="text" placeholder="username" onChange={onUsernameChange}/>
                         </Form.Group>
                         <Form.Group className="formPassword" controlId="formPassword">
-                            <Form.Control type="password" placeholder="password" onChange={onPasswordChange}/>
+                            <Form.Control defaultValue={loginData.password} type="password" placeholder="password" onChange={onPasswordChange}/>
                         </Form.Group>
                         <div className="login-form__button-wrapper">
                             <button className='form-button'

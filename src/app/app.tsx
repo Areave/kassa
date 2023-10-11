@@ -6,11 +6,13 @@ import AuthPage from "../pages/authPage/authPage";
 import apiService from "../utils/apiService";
 import KassaPage from "../pages/kassaPage/kassaPage";
 import LoadingPage from "../pages/loadingPage/loadingPage";
+import ExitToTerminalButton from "../comps/ExitToTerminalButton/ExitToTerminalButton";
 
 const App: React.FC<any> = () => {
 
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [currency, setCurrency] = useState('');
+    const [isGoHomeLoading, setIsGoHomeLoading] = useState(false);
     const [sessionInfo, setSessionInfo] = useState({
         terminalNumber: '',
         clientName: '',
@@ -23,7 +25,7 @@ const App: React.FC<any> = () => {
     const urlParam = new URLSearchParams(window.location.search);
     let sid = urlParam.get('token_key');
     if (!sid) {
-        sid = 'ba84226ef2533efcd72641da1ab40926';
+        sid = '136f56bfbcfea521953c639f0f1f5777';
     }
     let apiUrl = urlParam.get('api_url');
     //TODO: поправить
@@ -33,13 +35,7 @@ const App: React.FC<any> = () => {
         apiUrl = 'https://api.dev.100czk.cz/api_v2/';
     }
 
-    const exit = () => {
-        apiService.goHome(apiUrl, sid);
-        setIsAuthorized(false);
-        navigate('/');
-    };
-
-    useEffect(() => {
+    useEffect( () => {
         setIsLoading(true);
         apiService.getCollectionStatus(sid, apiUrl).then((res: any) => {
             setIsLoading(false);
@@ -64,9 +60,25 @@ const App: React.FC<any> = () => {
         })
     }, []);
 
+
+    const exit = async () => {
+        if (isGoHomeLoading) {
+            return;
+        }
+        // setIsLoading(true);
+        setIsGoHomeLoading(true);
+        await setTimeout(async () => {
+            const response = await apiService.goHome(apiUrl, sid);
+            setIsGoHomeLoading(false);
+            // setIsAuthorized(false);
+            // setIsLoading(false);
+        }, 1000);
+    };
+
     return <React.StrictMode>
-        {isLoading && <LoadingPage/>}
-        {!isLoading && <Routes>
+        {!isAuthorized && <ExitToTerminalButton exit={exit} isGoHomeLoading={isGoHomeLoading}/>}
+        {(isLoading) && <LoadingPage/>}
+        {!isLoading && !isGoHomeLoading && <Routes>
             {isAuthorized && <Route path='/*' element={<KassaPage
                 sid={sid}
                 apiUrl={apiUrl}

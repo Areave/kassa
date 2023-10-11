@@ -81,6 +81,7 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
     return <div className="page kassa-page">
         <SaveAndCloseModal sid={sid}
                            apiUrl={apiUrl}
+                           exit={exit}
                            dataToSend={dataToSend}
                            showModal={showModal}
                            closeModal={() => setShowModal(false)}

@@ -8,7 +8,6 @@ const Header = (props: any) => {
     const {user, terminalNumber, exit} = props;
 
     return <div className='header'>
-        <ExitToTerminalButton exit={exit}/>
         <div className='data-container'>
             <div className="infostring">{user + ' ,'}</div>
             <DateAndTime/>

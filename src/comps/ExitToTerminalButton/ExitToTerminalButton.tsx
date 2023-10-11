@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import './ExitToTerminalButton.scss'
+import Loader from "../loader/loader";
 
-const ExitToTerminalButton = ({exit}: any) => {
+const ExitToTerminalButton = ({exit, isGoHomeLoading}: any) => {
 
-    return <button className='exit-to-terminal-button' onClick={exit}>
-        Terminal home
+    return <button className={isGoHomeLoading ? 'exit-to-terminal-button loading' : 'exit-to-terminal-button'} onClick={exit}>
+        {isGoHomeLoading && <Loader/>}
+        {!isGoHomeLoading && 'Terminal Home'}
     </button>
 };
 
