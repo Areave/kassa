@@ -16,9 +16,9 @@ export const SaveAndCloseModal = ({showModal, closeModal, dataToSend, sid, setIs
         setTimeout(async () => {
 
             const response = await apiService.goHome(apiUrl, sid);
-            closeModal();
-            setIsAuthorized(false);
-            setIsLoadingLocal(false);
+            // closeModal();
+            // setIsAuthorized(false);
+            // setIsLoadingLocal(false);
 
         }, 1000);
     };

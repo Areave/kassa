@@ -69,7 +69,7 @@ const App: React.FC<any> = () => {
         setIsGoHomeLoading(true);
         await setTimeout(async () => {
             const response = await apiService.goHome(apiUrl, sid);
-            setIsGoHomeLoading(false);
+            // setIsGoHomeLoading(false);
             // setIsAuthorized(false);
             // setIsLoading(false);
         }, 1000);
