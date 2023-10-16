@@ -25,7 +25,7 @@ const App: React.FC<any> = () => {
     const urlParam = new URLSearchParams(window.location.search);
     let sid = urlParam.get('token_key');
     if (!sid) {
-        sid = 'a4f8f906d16e90e6657d9b826c27266a';
+        sid = '9aee1feb2db1ebfde513237ef490a4d0';
     }
     let apiUrl = urlParam.get('api_url');
     //TODO: поправить
