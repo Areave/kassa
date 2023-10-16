@@ -40,7 +40,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
                 setIsAuthorized(true);
             }
         }).catch(e => {
-            setError(e.message + ' catch')
+            setError(e.message + ' catch ' + JSON.stringify(e))
         }).finally(() => {
             setIsLoading(false);
         })
