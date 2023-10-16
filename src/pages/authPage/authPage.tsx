@@ -23,7 +23,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
             if (res.status === 'COLLECTION_ALREADY_OPENED') {
                 setIsAuthorized(true);
             } else if (res.status !== 'OK') {
-                setError(res.message);
+                setError(res.message + ', response: ' + JSON.stringify(res));
                 return;
             } else {
                 const sessionInfo = {
@@ -40,7 +40,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
                 setIsAuthorized(true);
             }
         }).catch(e => {
-            setError(e.message)
+            setError(e.message + ' catch')
         }).finally(() => {
             setIsLoading(false);
         })
