@@ -7,7 +7,7 @@ import {useNavigate} from "react-router";
 import ExitToTerminalButton from "../../comps/ExitToTerminalButton/ExitToTerminalButton";
 
 const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurrency, apiUrl, error, setError, exit}: any) => {
-    const [loginData, setFormData] = useState({username: 'demon2', password: '1234'});
+    const [loginData, setFormData] = useState({username: '', password: ''});
     const [isLoading, setIsLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -40,7 +40,7 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
                 setIsAuthorized(true);
             }
         }).catch(e => {
-            setError(e.message + ' catch ' + JSON.stringify(e))
+            setError(e.message + ' catch')
         }).finally(() => {
             setIsLoading(false);
         })
