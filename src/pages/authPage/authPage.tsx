@@ -15,9 +15,9 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
         event.preventDefault();
         setIsLoading(true);
         let data = loginData;
-        if(!loginData.password && !loginData.username) {
-            data = {username: 'demon2', password: '1234'}
-        }
+        // if(!loginData.password && !loginData.username) {
+        //     data = {username: 'demon2', password: '1234'}
+        // }
         apiService.startCollection(sid, apiUrl, data).then(res => {
 
             if (res.status === 'COLLECTION_ALREADY_OPENED') {

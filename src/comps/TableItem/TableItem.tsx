@@ -39,6 +39,7 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
         setLocalTableItemData({
             ...localTableItemData,
             cash_in: value,
+            taken: localTableItemData.cash_out - value,
             plannedBalance: (localTableItemData.actualBalance + value - localTableItemData.cash_out).toFixed(2)
         });
     };
@@ -57,6 +58,7 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
         setLocalTableItemData({
             ...localTableItemData,
             cash_out: value,
+            taken: value - localTableItemData.cash_in,
             plannedBalance: (localTableItemData.actualBalance - value + localTableItemData.cash_in).toFixed(2)
         });
     };
@@ -71,7 +73,8 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
                     id: localTableItemData.id,
                     old_sum: localTableItemData.old_sum,
                     cash_in: localTableItemData.cash_in,
-                    cash_out: localTableItemData.cash_out
+                    cash_out: localTableItemData.cash_out,
+                    taken: localTableItemData.taken,
                 });
             } else {
                 newDataToSend.push(dataObject);
@@ -116,8 +119,8 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
                               onClick={onInputClick}
                               onChange={onCashInChange}/>
             </div>
-
         </div>
+        <div className="item taken">{localTableItemData.taken}</div>
         <div className={getPlannedBalanceClassName()}>{localTableItemData.plannedBalance}</div>
     </div>
 };

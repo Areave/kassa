@@ -19,7 +19,8 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
         actualBalance: 0,
         plannedBalance: 0,
         cash_out_total: 0,
-        cash_in_total: 0
+        cash_in_total: 0,
+        taken_total: 0
     });
 
     const openInputModal = () => {
@@ -36,7 +37,8 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
                 id: item.id,
                 old_sum: item.old_sum,
                 cash_in: item.cash_in,
-                cash_out: item.cash_out
+                cash_out: item.cash_out,
+                taken: item.taken,
             };
             dataToSend.push(dataObjectToSend);
         });
@@ -47,13 +49,15 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
             actualBalance: 0,
             plannedBalance: 0,
             cash_out_total: 0,
-            cash_in_total: 0
+            cash_in_total: 0,
+            taken_total: 0
         };
         itemsArray.forEach((item: any) => {
             totalInfo.actualBalance = totalInfo.actualBalance + item.old_sum;
             totalInfo.plannedBalance = +(totalInfo.plannedBalance + item.old_sum - item.cash_out + item.cash_in).toFixed(2);
             totalInfo.cash_out_total = +(totalInfo.cash_out_total + item.cash_out).toFixed(2);
             totalInfo.cash_in_total = +(totalInfo.cash_in_total + item.cash_in).toFixed(2);
+            totalInfo.taken_total = +(totalInfo.taken_total + (item.cash_out - item.cash_in)).toFixed(2);
         });
         return totalInfo;
     };
@@ -101,6 +105,15 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
                     </div>
                 </div>
                 <div className="info_money">
+                    <div className="info_money__left-left">
+                        <div className="info_money__left-balance balance info-item">
+
+                        </div>
+                        <div className="info_money__left-total total info-item">
+                            <div className="info_money_item_label">Taken TOTAL:</div>
+                            <div className="info_money_item_value taken">{isNoItemsState ? '-' : totalInfo.taken_total + ' ' + currency}</div>
+                        </div>
+                    </div>
                     <div className="info_money__left">
                         <div className="info_money__left-balance balance info-item">
                             <div className="info_money_item_label">Actual balance</div>
@@ -132,6 +145,7 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
                     <div className="item actual-balance">Actual balance</div>
                     <div className="item substract">Cash OUT</div>
                     <div className="item add">Cash IN</div>
+                    <div className="item taken">Taken</div>
                     <div className="item planned-balance">Planned balance</div>
                 </div>
                 <div className="infotable_items">
@@ -143,6 +157,7 @@ const KassaPage = ({sessionInfo, sid, currency, isAuthorized, setIsAuthorized, a
                             plannedBalance: +(item.old_sum - item.cash_out + item.cash_in).toFixed(2),
                             cash_out: item.cash_out,
                             cash_in: item.cash_in,
+                            taken: item.cash_out - item.cash_in,
                             old_sum: item.old_sum
                         };
                         return <TableItem
