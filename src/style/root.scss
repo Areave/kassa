@@ -8,6 +8,13 @@
   overflow-y: scroll;
 }
 
+.info_money__left-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-right: 20px;
+}
+
 .page {
   @include styles.forRootElements;
 }
