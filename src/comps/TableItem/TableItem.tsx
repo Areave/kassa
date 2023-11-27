@@ -49,7 +49,7 @@ const TableItem = ({tableItemData, index, setDataToSend, dataToSend, setIsErrorS
         event.target.value = getValidInputValue(event.target.value);
         const value = +event.target.value;
 
-        if (localTableItemData.actualBalance - value - +localTableItemData.cash_in < 0) {
+        if (localTableItemData.actualBalance - value + +localTableItemData.cash_in < 0) {
             setIsLocalErrorState(true)
         } else {
             setIsLocalErrorState(false)
