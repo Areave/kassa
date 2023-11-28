@@ -15,15 +15,22 @@ const AuthPage = ({isAuthorized, setIsAuthorized, sid, setSessionInfo, setCurren
         event.preventDefault();
         setIsLoading(true);
         let data = loginData;
-        // if(!loginData.password && !loginData.username) {
-        //     data = {username: 'demon2', password: '1234'}
-        // }
+        if(!loginData.password && !loginData.username) {
+            data = {username: 'xxxx', password: 'xxxx'}
+        }
         apiService.startCollection(sid, apiUrl, data).then(res => {
 
             if (res.status === 'COLLECTION_ALREADY_OPENED') {
                 setIsAuthorized(true);
+            } else if (res.status === 'PARAMETER_NOT_FOUND') {
+                setError('Incorrect login or password'
+                    // + ', response: ' + JSON.stringify(res)
+                );
+                return;
             } else if (res.status !== 'OK') {
-                setError(res.message + ', response: ' + JSON.stringify(res));
+                setError(res.message
+                    // + ', response: ' + JSON.stringify(res)
+                );
                 return;
             } else {
                 const sessionInfo = {
