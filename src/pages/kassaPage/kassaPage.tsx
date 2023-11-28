@@ -1,4 +1,4 @@
-import './kassaPage.scss'
+import './kassaPage1.scss'
 import React, {useEffect, useState} from 'react';
 import TableItem from "../../comps/TableItem/TableItem";
 import {SaveAndCloseModal} from "../../comps/SaveAndCloseModal/SaveAndCloseModal";
